@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise')
 const validator = require('validator')
+const { userQueries } = require('./database/queries')
 require('dotenv').config()
 
 class User {
@@ -18,7 +19,7 @@ class User {
 		if (!validator.isEmail(email)) throw Error('Enter a valid email')
 
 		const connection = await this.connect()
-		const query = `SELECT * FROM ${process.env.DB_NAME}.users WHERE email = '${email}'`
+		const query = userQueries.get(email)
 		const [row] = await connection.execute(query)
 
 		if (!row.length) throw Error('User does not exits')
@@ -37,7 +38,7 @@ class User {
 		// const hash = await bcrypt.hash(password, salt)
 
 		const connection = await this.connect()
-		const query = `INSERT INTO ${process.env.DB_NAME}.users (first_name, last_name, email, password, registration_date) VALUES ('${firstName}', '${lastName}', '${email}', '${password}', NOW())`
+		const query = userQueries.create(firstName, lastName, email, password)
 		await connection.execute(query)
 
 		return this.get(email)

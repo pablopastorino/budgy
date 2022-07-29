@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise')
 const validator = require('validator')
+const { transactionQueries } = require('./database/queries')
 require('dotenv').config()
 const User = require('./userModel')
 
@@ -19,12 +20,7 @@ class Transaction {
 		if (!validator.isEmail(email)) throw Error('Enter a valid email')
 
 		const connection = await this.connect()
-		const query = `SELECT t.id, t.ammount, t.registraton_date, t.score, co.name AS concept, ca.name AS category
-			FROM ${process.env.DB_NAME}.transactions t
-			LEFT JOIN ${process.env.DB_NAME}.concepts co ON co.id = t.concepts_id
-			LEFT JOIN ${process.env.DB_NAME}.categories ca ON co.categories_id = ca.id
-			WHERE t.users_id = (SELECT id FROM ${process.env.DB_NAME}.users WHERE email = '${email}')`
-
+		const query = transactionQueries.getAll(email)
 		const [rows] = await connection.execute(query)
 
 		if (!rows.length) throw Error('There are no transactions yet')
@@ -36,7 +32,7 @@ class Transaction {
 		if (!id) throw Error('Invalid id')
 
 		const connection = await this.connect()
-		const query = `SELECT * FROM ${process.env.DB_NAME}.transactions WHERE id = ${id}`
+		const query = transactionQueries.get(id)
 		const [rows] = await connection.execute(query)
 
 		return rows
@@ -46,35 +42,21 @@ class Transaction {
 		if (!id) throw Error('Invalid id')
 
 		const connection = await this.connect()
-		const query = `DELETE FROM ${process.env.DB_NAME}.transactions WHERE id = ${id}`
+		const query = transactionQueries.delet(id)
 		const rows = await connection.execute(query)
-	}
-
-	static async getConcept(conceptText) {
-		if (!conceptText) throw Error('Add a concept')
-
-		const connection = await this.connect()
-		const query = `SELECT id FROM ${process.env.DB_NAME}.concepts WHERE name REGEXP '^${conceptText}$';`
-		const [concept] = await connection.execute(query)
-
-		return concept
-	}
-
-	static async createConcept(name, category) {
-		if (!name || !category) throw Error('Missing some fields')
-
-		const connection = await this.connect()
-		const query = `INSERT INTO ${process.env.DB_NAME}.concepts (name, categories_id) VALUES ('${name}', '${category}');`
-		const [id] = await connection.execute(query)
-
-		return id
 	}
 
 	static async create(ammount, date, score, email, conceptId) {
 		const { id: userId } = await User.get(email)
 
 		const connection = await this.connect()
-		const query = `INSERT INTO ${process.env.DB_NAME}.transactions (ammount, registraton_date, score, users_id, concepts_id) VALUES ('${ammount}', '${date}', '${score}', '${userId}', '${conceptId}');`
+		const query = transactionQueries.create(
+			ammount,
+			date,
+			score,
+			userId,
+			conceptId
+		)
 		const result = await connection.execute(query)
 
 		return result

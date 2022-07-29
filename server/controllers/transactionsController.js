@@ -1,5 +1,5 @@
 const Transaction = require('../models/transactionModel')
-const User = require('../models/userModel')
+const Concept = require('../models/conceptModel')
 
 const getAll = async (req, res) => {
 	const { email } = req.body
@@ -29,13 +29,10 @@ const create = async (req, res) => {
 	const { ammount, date, score, email, concept, category } = req.body
 
 	try {
-		const [existingConcept] = await Transaction.getConcept(concept)
+		const [existingConcept] = await Concept.get(concept)
 		let conceptId
 		if (!existingConcept) {
-			const { insertId } = await Transaction.createConcept(
-				concept,
-				category
-			)
+			const { insertId } = await Concept.create(concept, category)
 			conceptId = insertId
 		} else if (existingConcept) {
 			conceptId = existingConcept.id
