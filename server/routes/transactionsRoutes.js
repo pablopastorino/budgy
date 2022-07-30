@@ -1,4 +1,5 @@
 const express = require('express')
+const requireAuth = require('../middleware/requireAuth')
 const router = express.Router()
 const {
 	getAll,
@@ -7,9 +8,10 @@ const {
 } = require('../controllers/transactionsController')
 
 router.use(express.json())
+router.use(requireAuth)
 
-router.post('/', getAll)
-router.delete('/', remove)
-router.post('/new', create)
+router.get('/', getAll)
+router.delete('/:id', remove)
+router.post('/', create)
 
 module.exports = router

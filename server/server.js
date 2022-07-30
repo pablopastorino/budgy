@@ -3,7 +3,7 @@ require('dotenv').config()
 const userRoutes = require('./routes/userRoutes')
 const trantactionRoutes = require('./routes/transactionsRoutes')
 
-app.use('/api/users', userRoutes)
+app.use('/api/user', userRoutes)
 app.use('/api/transactions', trantactionRoutes)
 
 app.listen(process.env.PORT, () =>

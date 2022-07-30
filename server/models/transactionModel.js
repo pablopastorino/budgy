@@ -15,12 +15,11 @@ class Transaction {
 		return connection
 	}
 
-	static async getAll(email) {
-		if (!email) throw Error('Enter email')
-		if (!validator.isEmail(email)) throw Error('Enter a valid email')
+	static async getAll(id) {
+		if (!id) throw Error('Invalid user')
 
 		const connection = await this.connect()
-		const query = transactionQueries.getAll(email)
+		const query = transactionQueries.getAll(id)
 		const [rows] = await connection.execute(query)
 
 		if (!rows.length) throw Error('There are no transactions yet')
@@ -42,12 +41,13 @@ class Transaction {
 		if (!id) throw Error('Invalid id')
 
 		const connection = await this.connect()
-		const query = transactionQueries.delet(id)
+		const query = transactionQueries.delete(id)
 		const rows = await connection.execute(query)
 	}
 
-	static async create(ammount, date, score, email, conceptId) {
-		const { id: userId } = await User.get(email)
+	static async create(ammount, date, score, userId, conceptId) {
+		if (!ammount || !date || !score || !conceptId)
+			throw Error('Complete all fields to create a transaction')
 
 		const connection = await this.connect()
 		const query = transactionQueries.create(

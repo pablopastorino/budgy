@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise')
 const validator = require('validator')
+const bcrypt = require('bcrypt')
 const { userQueries } = require('./database/queries')
 require('dotenv').config()
 
@@ -22,26 +23,38 @@ class User {
 		const query = userQueries.get(email)
 		const [row] = await connection.execute(query)
 
-		if (!row.length) throw Error('User does not exits')
+		if (!row.length) throw Error('User does not exists')
+
+		return row[0]
+	}
+
+	static async getById(id) {
+		if (!id) throw Error('Invalid id')
+
+		const connection = await this.connect()
+		const query = userQueries.getById(id)
+		const [row] = await connection.execute(query)
+
+		if (!row.length) throw Error('User does not exists')
 
 		return row[0]
 	}
 
 	static async create(firstName, lastName, email, password) {
 		if (!firstName || !lastName || !email || !password)
-			throw Error('All fields must be filled')
-		if (!validator.isEmail(email)) throw Error('Email is not valid')
+			throw Error('Oh oh! some fields are missing...')
+		if (!validator.isEmail(email)) throw Error(`Is ${email} your email?`)
 		if (!validator.isStrongPassword(password))
-			throw Error('Password is not strong enougth')
+			throw Error('Give that password a little more strength')
 
-		// const salt = await bcrypt.genSalt(10)
-		// const hash = await bcrypt.hash(password, salt)
+		const salt = await bcrypt.genSalt(10)
+		const hash = await bcrypt.hash(password, salt)
 
 		const connection = await this.connect()
-		const query = userQueries.create(firstName, lastName, email, password)
-		await connection.execute(query)
+		const query = userQueries.create(firstName, lastName, email, hash)
+		const result = await connection.execute(query)
 
-		return this.get(email)
+		return result.insertId
 	}
 
 	static async login(email, password) {
@@ -50,10 +63,7 @@ class User {
 		const user = await this.get(email)
 		if (!user) throw Error('Invalid email')
 
-		// const match = await bcrypt.compare(password, user.password)
-		// if (!match) throw Error('Invalid password')
-
-		const match = password === user.password
+		const match = await bcrypt.compare(password, user.password)
 		if (!match) throw Error('Invalid password')
 
 		return user

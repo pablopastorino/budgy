@@ -2,9 +2,9 @@ const Transaction = require('../models/transactionModel')
 const Concept = require('../models/conceptModel')
 
 const getAll = async (req, res) => {
-	const { email } = req.body
+	const { id } = req.user
 	try {
-		const transactions = await Transaction.getAll(email)
+		const transactions = await Transaction.getAll(id)
 		res.status(200).json({ transactions })
 	} catch (error) {
 		res.status(400).json({ error: error.message })
@@ -12,7 +12,7 @@ const getAll = async (req, res) => {
 }
 
 const remove = async (req, res) => {
-	const { id } = req.body
+	const { id } = req.params
 	try {
 		const [row] = await Transaction.get(id)
 		console.log(row)
@@ -26,7 +26,7 @@ const remove = async (req, res) => {
 }
 
 const create = async (req, res) => {
-	const { ammount, date, score, email, concept, category } = req.body
+	const { ammount, date, score, concept, category } = req.body
 
 	try {
 		const [existingConcept] = await Concept.get(concept)
@@ -42,7 +42,7 @@ const create = async (req, res) => {
 			ammount,
 			date,
 			score,
-			email,
+			req.user.id,
 			conceptId
 		)
 
