@@ -1,6 +1,8 @@
 import React from 'react'
 import { useEffect } from 'react'
-import TransactionForm from '../components/TransactionForm'
+import Balance from '../components/Balance'
+import NewTransaction from '../components/NewTransaction'
+// import TransactionForm from '../components/TransactionForm'
 import Transactions from '../components/Transactions'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useTransactionsContext } from '../hooks/useTransactionsContext'
@@ -23,9 +25,10 @@ const Home = () => {
 		if (user) fetchTransactions()
 	}, [dispatch, user])
 	return (
-		<div className='home'>
+		<div className='h-full w-full flex flex-col'>
+			<Balance data={transactions} />
 			<Transactions data={transactions} />
-			<TransactionForm />
+			<NewTransaction />
 		</div>
 	)
 }

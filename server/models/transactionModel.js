@@ -57,9 +57,9 @@ class Transaction {
 			userId,
 			conceptId
 		)
-		const result = await connection.execute(query)
+		const [result] = await connection.execute(query)
 
-		return result
+		return result.insertId
 	}
 }
 

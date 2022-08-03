@@ -17,15 +17,19 @@ export const useSignup = () => {
 		})
 
 		const json = await response.json()
+		console.log(json)
 
 		if (!response.ok) {
-			setError(json.error)
+			const existingEmail = 'Email already exists, login!'
+			setError(
+				json.error.startsWith('Duplicate') ? existingEmail : json.error
+			)
 			setIsLoading(false)
 		}
 
 		if (response.ok) {
 			localStorage.setItem('user', JSON.stringify(json))
-			dispatch({ type: 'LOGIN', payload: json })
+			dispatch({ type: 'LOGIN', payload: { ...json } })
 			setIsLoading(false)
 		}
 	}

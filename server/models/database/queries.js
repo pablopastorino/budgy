@@ -16,6 +16,10 @@ const conceptQueries = {
 		`INSERT INTO ${process.env.DB_NAME}.concepts (name, categories_id) VALUES ('${name}', '${category}');`
 }
 
+const categoryQueries = {
+	getAll: `SELECT * FROM ${process.env.DB_NAME}.categories`
+}
+
 const transactionQueries = {
 	getAll: id => `SELECT t.id, t.ammount, t.registraton_date, t.score, co.name AS concept, ca.name AS category
         FROM ${process.env.DB_NAME}.transactions t
@@ -30,8 +34,29 @@ const transactionQueries = {
 		`INSERT INTO ${process.env.DB_NAME}.transactions (ammount, registraton_date, score, users_id, concepts_id) VALUES ('${ammount}', '${date}', '${score}', '${userId}', '${conceptId}');`
 }
 
+const insertCategories = `INSERT INTO ${process.env.DB_NAME}.categories (name, is_earning) 
+	VALUES
+		('housing', 0),
+		('transportation', 0),
+		('food', 0),
+		('utilities', 0),
+		('insurance', 0),
+		('medical & healthcare', 0),
+		('saving, investing & debt payments',	0),
+		('personal spending', 0),
+		('recreation & entertainment',0),
+		('miscellaneous', 0),
+		('salary & wages', 1),
+		('investment', 1),
+		('business', 1),
+		('interests', 1),
+		('rental', 1),
+		('other', 1);`
+
 module.exports = {
+	categoryQueries,
 	conceptQueries,
 	userQueries,
-	transactionQueries
+	transactionQueries,
+	insertCategories
 }

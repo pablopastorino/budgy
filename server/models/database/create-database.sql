@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `heroku_d9618894fe3a79c`.`categories` (
   `is_earning` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DEFAULT CHARACTER SET = utf8; 
 
 
 -- -----------------------------------------------------

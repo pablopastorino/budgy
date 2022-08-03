@@ -38,7 +38,7 @@ const create = async (req, res) => {
 			conceptId = existingConcept.id
 		}
 
-		const [transaction] = await Transaction.create(
+		const id = await Transaction.create(
 			ammount,
 			date,
 			score,
@@ -46,7 +46,7 @@ const create = async (req, res) => {
 			conceptId
 		)
 
-		res.status(200).json({ transaction })
+		res.status(200).json({ id, ...req.body })
 	} catch (error) {
 		res.status(400).json({ error: error.message })
 	}

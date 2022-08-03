@@ -23,7 +23,7 @@ class User {
 		const query = userQueries.get(email)
 		const [row] = await connection.execute(query)
 
-		if (!row.length) throw Error('User does not exists')
+		if (!row.length) throw Error('Invalid credentials!')
 
 		return row[0]
 	}
@@ -42,18 +42,18 @@ class User {
 
 	static async create(firstName, lastName, email, password) {
 		if (!firstName || !lastName || !email || !password)
-			throw Error('Oh oh! some fields are missing...')
-		if (!validator.isEmail(email)) throw Error(`Is ${email} your email?`)
+			throw Error('All fields must be filled')
+		if (!validator.isEmail(email))
+			throw Error(`'${email}' is not a valid email`)
 		if (!validator.isStrongPassword(password))
-			throw Error('Give that password a little more strength')
+			throw Error('Weak password, try harder!')
 
 		const salt = await bcrypt.genSalt(10)
 		const hash = await bcrypt.hash(password, salt)
 
 		const connection = await this.connect()
 		const query = userQueries.create(firstName, lastName, email, hash)
-		const result = await connection.execute(query)
-
+		const [result] = await connection.execute(query)
 		return result.insertId
 	}
 
@@ -61,10 +61,10 @@ class User {
 		if (!email || !password) throw Error('All fields must be filled')
 
 		const user = await this.get(email)
-		if (!user) throw Error('Invalid email')
+		if (!user) throw Error('Invalid credentials!')
 
 		const match = await bcrypt.compare(password, user.password)
-		if (!match) throw Error('Invalid password')
+		if (!match) throw Error('Invalid credentials!')
 
 		return user
 	}

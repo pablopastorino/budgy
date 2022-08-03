@@ -13,6 +13,85 @@ body {
 	overflow: hidden;
 }
 
-#root {
+#root,
+.App {
 	height: 100%;
+}
+
+/* -------------------------------- Scrollbar ------------------------------- */
+::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+}
+::-webkit-scrollbar-button {
+	width: 0px;
+	height: 0px;
+}
+::-webkit-scrollbar-thumb {
+	background: #dbeafe;
+	border: 0px none #ffffff;
+	border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+	background: #000000;
+}
+::-webkit-scrollbar-track {
+	background: #ffffff;
+	border: 0px none #ffffff;
+	border-radius: 7px;
+}
+::-webkit-scrollbar-track:hover {
+	background: #ffffff;
+}
+::-webkit-scrollbar-track:active {
+	background: #ffffff;
+}
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+/* --------------------------------- Balance -------------------------------- */
+/* .balance {
+	width: -webkit-fill-available;
+} */
+
+/* .transactions-container {
+	height: -webkit-fill-available;
+} */
+
+/* ----------------------------- Category Input ----------------------------- */
+.category-container {
+	max-height: 2rem !important;
+}
+
+.category__control {
+	border: none !important;
+	border-radius: 10rem !important;
+	max-height: 2rem !important;
+}
+
+.category__value-container {
+	max-height: 2rem !important;
+}
+
+.category__indicator-separator {
+	display: none !important;
+}
+
+.category__single-value {
+	max-height: 2rem !important;
+	display: flex !important;
+	align-items: center !important;
+}
+
+.css-b62m3t-container *,
+.css-b62m3t-container *:focus {
+	border: none !important;
+}
+
+.category__control--is-focused {
+	all: unset;
 }

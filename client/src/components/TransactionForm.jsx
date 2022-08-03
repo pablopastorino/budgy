@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import NumberFormat from 'react-number-format'
+import Input from '../components/Input'
+import CategoryInput from './CategoryInput'
+import ScoreInput from './ScoreInput'
+import TypeInput from './TypeInput'
+import BackButton from './BackButton'
+
 import { useTransactionsContext } from '../hooks/useTransactionsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
-import { useState } from 'react'
-import Form from './Form'
+import { useCategoriesContext } from '../hooks/useCategoryContext'
+
+import { scores } from '../utils/scores'
+import { expense, income } from '../utils/categories'
 
 const TransactionForm = () => {
 	const { dispatch } = useTransactionsContext()
 	const { user } = useAuthContext()
+	const { categories, setCategories } = useCategoriesContext()
+	const navigate = useNavigate()
 
 	const [transaction, setTransaction] = useState({
 		date: '',
@@ -17,6 +30,16 @@ const TransactionForm = () => {
 	})
 	const [error, setError] = useState(null)
 	const [emptyFields, setEmptyFields] = useState([])
+	const [type, setType] = useState('expense')
+
+	useEffect(() => {
+		const getCategories = async () => {
+			const response = await fetch('/api/categories')
+			setCategories(response.categories)
+		}
+
+		getCategories()
+	}, [])
 
 	const handleSubmit = async e => {
 		e.preventDefault()
@@ -36,8 +59,6 @@ const TransactionForm = () => {
 		})
 
 		const json = await response.json()
-		const { insertId: id } = json
-		console.log(json)
 
 		if (!response.ok) {
 			setError(json.error)
@@ -46,12 +67,7 @@ const TransactionForm = () => {
 			dispatch({
 				type: 'CREATE_TRANSACTION',
 				payload: {
-					id,
-					date: transaction.date,
-					concept: transaction.concept,
-					ammount: transaction.ammount,
-					category: transaction.category,
-					score: transaction.score
+					...transaction
 				}
 			})
 			setTransaction({
@@ -63,6 +79,7 @@ const TransactionForm = () => {
 			})
 			setError(null)
 			setEmptyFields([])
+			navigate('/', { replace: true })
 		}
 	}
 
@@ -74,14 +91,66 @@ const TransactionForm = () => {
 	}
 
 	return (
-		<Form
-			title='Add a transaction'
-			className='create'
-			data={transaction}
-			error={[error, emptyFields]}
-			onChange={handleChange}
+		<form
+			className={
+				'h-5/6 sm:h-full bg-sky-200 rounded-3xl w-5/6 sm:w-3/4 lg:w-2/4 flex flex-col justify-around items-center py-5 sm:py-2 sm:my-4'
+			}
 			onSubmit={handleSubmit}
-		/>
+		>
+			<h3 className='font-extrabold text-4xl text-white'>
+				Add Transaction
+			</h3>
+			<TypeInput checked={type} onChange={e => setType(e.target.value)} />
+			<Input
+				type='date'
+				name='date'
+				value={transaction.date}
+				onChange={handleChange}
+			/>
+			<CategoryInput
+				categories={type === 'expense' ? expense : income}
+				onChange={c =>
+					setTransaction(prev => ({ ...prev, category: c.value }))
+				}
+			/>
+
+			<Input
+				type='text'
+				name='concept'
+				value={transaction.concept}
+				onChange={handleChange}
+			/>
+			<div className='flex flex-col  w-3/4 sm:w-2/3 lg:w-1/2'>
+				<label
+					className='text-xl font-medium ml-2 capitalize'
+					htmlFor='title'
+				>
+					Ammount
+				</label>
+
+				<NumberFormat
+					className='appearance-none focus:outline-none h-10 rounded-3xl mt-1 px-6 text-md sm:text-lg text-sky-900'
+					thousandSeparator={true}
+					prefix={'$'}
+					onValueChange={vObj =>
+						setTransaction({
+							...transaction,
+							ammount:
+								type === 'expense' ? -vObj.value : vObj.value
+						})
+					}
+				/>
+			</div>
+			<ScoreInput
+				scores={scores}
+				onChange={handleChange}
+				selected={transaction.score}
+			/>
+			<button className='bg-orange-300 px-14 py-2 rounded-xl font-semibold mt-2'>
+				Add
+			</button>
+			<BackButton />
+		</form>
 	)
 }
 
