@@ -15,7 +15,6 @@ const remove = async (req, res) => {
 	const { id } = req.params
 	try {
 		const [row] = await Transaction.get(id)
-		console.log(row)
 		if (!row) return res.status(404).json({ error: 'No such record' })
 
 		await Transaction.remove(id)

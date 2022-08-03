@@ -25,8 +25,8 @@ const TransactionDetails = ({ transaction }) => {
 		})
 		const json = await response.json()
 
-		if (response.ok) {
-			dispatch({ type: 'DELETE_TRANSACTION', payload: json })
+		if (response.ok === true) {
+			dispatch({ type: 'DELETE_TRANSACTION', payload: json.transaction })
 		}
 	}
 
@@ -44,11 +44,11 @@ const TransactionDetails = ({ transaction }) => {
 		<div className='bg-blue-100 text-gray-900 my-3 rounded-2xl flex content-center items-center p-2 relative'>
 			<span
 				key='1'
-				className='bg-gray-900 text-white text-3xl h-12 w-12 rounded-2xl flex justify-center items-center text-center'
+				className='shrink-0 bg-gray-900 text-white text-3xl h-12 w-12 rounded-2xl flex justify-center items-center text-center'
 			>
 				{categoryIcons[category]}
 			</span>
-			<span key='2' className='flex flex-col flex-1 mx-6 w-full'>
+			<span key='2' className='flex flex-col flex-1 mx-6 w-1/2'>
 				<span
 					key='1'
 					className='text-lg font-semibold text-ellipsis whitespace-nowrap overflow-hidden'
@@ -64,7 +64,7 @@ const TransactionDetails = ({ transaction }) => {
 					</span>
 				</span>
 			</span>
-			<span key='3' className='font-extrabold ml-auto'>
+			<span key='3' className='shrink-0 font-extrabold ml-auto'>
 				{formatter.format(ammount)}
 			</span>
 			<button

@@ -1,11 +1,13 @@
-import { useEffect } from 'react'
-import { useAuthContext } from './hooks/useAuthContext'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
-import Navbar from './components/Navbar'
+
+import Dashboard from './pages/Dashboard'
 import Home from './pages/Home'
 import Login from './pages/Login'
-import Signup from './pages/Signup'
+import Navbar from './components/Navbar'
 import TransactionForm from './components/TransactionForm'
+import Signup from './pages/Signup'
+
+import { useAuthContext } from './hooks/useAuthContext'
 
 function App() {
 	const { user } = useAuthContext()
@@ -14,7 +16,7 @@ function App() {
 		<div className='App text-sky-900 flex flex-col h-full'>
 			<BrowserRouter>
 				<Navbar />
-				<div className='h-full flex flex-col items-center justify-center'>
+				<div className='h-full flex flex-col items-center overflow-y-scroll mb-8'>
 					<Routes>
 						<Route
 							path='/'
@@ -30,6 +32,13 @@ function App() {
 								)
 							}
 						/>
+						<Route
+							path='/dashboard'
+							element={
+								user ? <Dashboard /> : <Navigate to='/login' />
+							}
+						/>
+
 						<Route
 							path='/login'
 							element={!user ? <Login /> : <Navigate to='/' />}

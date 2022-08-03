@@ -11,7 +11,7 @@ const transactionsReducer = (state, action) => {
 			}
 		case 'CREATE_TRANSACTION':
 			return {
-				transactions: [action.payload, ...state.transactions]
+				transactions: [action.payload, ...state?.transactions]
 			}
 		case 'DELETE_TRANSACTION':
 			return {

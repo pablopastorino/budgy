@@ -4,7 +4,7 @@ import { categoryIcons } from '../utils/categories'
 
 const CategoryInput = ({ categories, onChange, value }) => {
 	return (
-		<div className='flex flex-col w-3/4 sm:w-2/3 lg:w-1/2'>
+		<div className='flex flex-col w-3/4 sm:w-2/3 lg:w-1/2 mt-4'>
 			<label
 				htmlFor='categories'
 				className='text-xl font-medium ml-2 capitalize'

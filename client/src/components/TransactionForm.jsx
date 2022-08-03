@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
 import NumberFormat from 'react-number-format'
+
 import Input from '../components/Input'
 import CategoryInput from './CategoryInput'
 import ScoreInput from './ScoreInput'
@@ -13,7 +13,6 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import { useCategoriesContext } from '../hooks/useCategoryContext'
 
 import { scores } from '../utils/scores'
-import { categoryIcons } from '../utils/categories'
 
 const TransactionForm = () => {
 	const { dispatch } = useTransactionsContext()
@@ -29,6 +28,7 @@ const TransactionForm = () => {
 		score: ''
 	})
 	const [error, setError] = useState(null)
+	// eslint-disable-next-line
 	const [emptyFields, setEmptyFields] = useState([])
 	const [type, setType] = useState('expense')
 
@@ -84,7 +84,7 @@ const TransactionForm = () => {
 	return (
 		<form
 			className={
-				'h-5/6 sm:h-full bg-sky-200 rounded-3xl w-5/6 sm:w-3/4 lg:w-2/4 flex flex-col justify-around items-center py-5 sm:py-2 sm:my-4'
+				'bg-sky-300 rounded-3xl w-5/6 sm:w-3/4 lg:w-2/4 flex flex-col justify-around items-center py-5 sm:my-4'
 			}
 			onSubmit={handleSubmit}
 		>
@@ -113,7 +113,7 @@ const TransactionForm = () => {
 				value={transaction.concept}
 				onChange={handleChange}
 			/>
-			<div className='flex flex-col  w-3/4 sm:w-2/3 lg:w-1/2'>
+			<div className='flex flex-col mt-4 w-3/4 sm:w-2/3 lg:w-1/2'>
 				<label
 					className='text-xl font-medium ml-2 capitalize'
 					htmlFor='title'
@@ -139,7 +139,8 @@ const TransactionForm = () => {
 				onChange={handleChange}
 				selected={transaction.score}
 			/>
-			<button className='bg-orange-300 px-14 py-2 rounded-xl font-semibold mt-2'>
+			{error && <div className='text-rose-500 font-medium'>{error}</div>}
+			<button className='bg-orange-300 px-14 py-2 rounded-xl font-semibold mt-6'>
 				Add
 			</button>
 			<BackButton />

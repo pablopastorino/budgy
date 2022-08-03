@@ -5,7 +5,7 @@ const Input = ({ name, onChange, error, value, type = 'text' }) => {
 		name.includes('Name') ? name.split('Name')[0] + ' Name' : name
 
 	return (
-		<div className='flex flex-col w-3/4 sm:w-2/3 lg:w-1/2'>
+		<div className='flex flex-col w-3/4 sm:w-2/3 lg:w-1/2 mt-4'>
 			<label
 				className='text-xl font-medium ml-2 capitalize'
 				htmlFor='title'

@@ -8,7 +8,7 @@ const Balance = ({ data }) => {
 	})
 
 	return (
-		<div className='rounded-3xl h-64 mt-4 mx-4 px-6 text-white bg-gray-900 flex justify-between'>
+		<div className='rounded-3xl h-36 mt-4 mx-4 px-6 text-white bg-gray-900 flex justify-between'>
 			<span className='text-4xl flex items-center content-center'>
 				{formatter.format(
 					data?.length
