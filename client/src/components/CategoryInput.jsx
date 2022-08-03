@@ -1,5 +1,6 @@
 import React from 'react'
 import Select from 'react-select'
+import { categoryIcons } from '../utils/categories'
 
 const CategoryInput = ({ categories, onChange, value }) => {
 	return (
@@ -22,12 +23,12 @@ const CategoryInput = ({ categories, onChange, value }) => {
 							style={{ display: 'flex', alignItems: 'center' }}
 							className='capitalize appearance-none focus:outline-none h-10 pl-2 rounded-3xl mt-1 text-sky-900'
 						>
-							{e.icon}
+							{categoryIcons[e.name]}
 							<span
 								style={{ marginLeft: 5 }}
 								className='capitalize'
 							>
-								{e.text}
+								{e.name}
 							</span>
 						</div>
 					)}

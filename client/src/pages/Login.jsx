@@ -22,7 +22,7 @@ const Login = () => {
 				data={data}
 				error={[error, []]}
 				isLoading={isLoading}
-				className='bg-sky-200 rounded-3xl h-3/4 w-5/6 sm:w-3/4 lg:w-2/4 flex flex-col justify-around items-center py-10 sm:py-2'
+				className='bg-sky-300 rounded-3xl h-3/4 w-5/6 sm:w-3/4 lg:w-2/4 flex flex-col justify-around items-center py-10 sm:py-2'
 				onChange={handleChange}
 				onSubmit={handleSubmit}
 				title='Login'

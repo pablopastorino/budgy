@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useTransactionsContext } from '../hooks/useTransactionsContext'
-import { expense, income } from '../utils/categories'
+import { categoryIcons } from '../utils/categories'
 import { scores } from '../utils/scores'
 
 const TransactionDetails = ({ transaction }) => {
@@ -42,24 +42,29 @@ const TransactionDetails = ({ transaction }) => {
 
 	return (
 		<div className='bg-blue-100 text-gray-900 my-3 rounded-2xl flex content-center items-center p-2 relative'>
-			<span className='bg-gray-900 text-white text-3xl h-12 w-12 rounded-2xl flex justify-center items-center text-center'>
-				{/* {category} */}
-				{expense[5].icon}
+			<span
+				key='1'
+				className='bg-gray-900 text-white text-3xl h-12 w-12 rounded-2xl flex justify-center items-center text-center'
+			>
+				{categoryIcons[category]}
 			</span>
-			<span className='flex flex-col flex-1 mx-6 w-full'>
-				<span className='text-lg font-semibold text-ellipsis whitespace-nowrap overflow-hidden'>
+			<span key='2' className='flex flex-col flex-1 mx-6 w-full'>
+				<span
+					key='1'
+					className='text-lg font-semibold text-ellipsis whitespace-nowrap overflow-hidden'
+				>
 					{concept}
 				</span>
-				<span className='flex'>
+				<span key='2' className='flex'>
 					<span className='text-sm text-gray-600 mt-auto'>
 						{formatDate(date)}
 					</span>
 					<span className='ml-6 text-2xl'>
-						{scores[Math.floor(score / 2)].icon}
+						{scores.filter(s => s.id === score).icon}
 					</span>
 				</span>
 			</span>
-			<span className='font-extrabold ml-auto'>
+			<span key='3' className='font-extrabold ml-auto'>
 				{formatter.format(ammount)}
 			</span>
 			<button

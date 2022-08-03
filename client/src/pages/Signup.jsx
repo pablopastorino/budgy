@@ -28,7 +28,7 @@ const Signup = () => {
 			onChange={handleChange}
 			onSubmit={handleSubmit}
 			title='Signup'
-			className='h-5/6 sm:h-full bg-sky-200 rounded-3xl w-5/6 sm:w-3/4 lg:w-2/4 flex flex-col justify-around items-center py-5 sm:py-2 sm:my-4'
+			className='h-5/6 sm:h-full bg-sky-300 rounded-3xl w-5/6 sm:w-3/4 lg:w-2/4 flex flex-col justify-around items-center py-5 sm:py-2 sm:my-4'
 			message={['Have an account?', 'Login']}
 		/>
 	)

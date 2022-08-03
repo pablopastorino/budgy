@@ -36,7 +36,7 @@ const ScoreInput = ({ scores, onChange, selected }) => {
 						key={s.id}
 						score={s}
 						onChange={onChange}
-						selected={s.id === selected}
+						selected={s.id === +selected}
 					/>
 				))}
 			</div>

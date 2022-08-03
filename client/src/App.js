@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useAuthContext } from './hooks/useAuthContext'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'

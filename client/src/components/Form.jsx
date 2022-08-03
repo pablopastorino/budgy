@@ -28,7 +28,7 @@ const Form = ({
 				<div className='text-rose-500 font-medium'>{error}</div>
 			)}
 			<button
-				className='bg-orange-300 px-14 py-2 rounded-xl font-semibold mt-2'
+				className='bg-orange-400 px-14 py-2 rounded-xl font-semibold mt-2'
 				disabled={isLoading}
 			>
 				{title.split(' ')[0]}

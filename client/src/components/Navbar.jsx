@@ -24,8 +24,8 @@ const Navbar = () => {
 							<span className='inline-flex rounded-lg bg-orange-400 px-4 py-2'>
 								Budgy
 							</span>
-							<span className='font-light text-base self-end'>
-								&nbsp;Make it count!
+							<span className='font-normal text-lg self-end'>
+								&nbsp; Make it count!
 							</span>
 						</Link>
 						<span className='ml-auto font-semibold text-lg'>
@@ -39,12 +39,25 @@ const Navbar = () => {
 						</button>
 					</>
 				) : (
-					<Link
-						to={pathname === '/login' ? '/signup' : '/login'}
-						className='bg-sky-900 text-white px-14 py-2 rounded-xl font-semibold ml-auto'
-					>
-						{pathname === '/login' ? 'Signup' : 'Login'}
-					</Link>
+					<>
+						<Link
+							to='/'
+							className='font-extrabold text-4xl flex items-center'
+						>
+							<span className='inline-flex rounded-lg bg-orange-400 px-4 py-2'>
+								Budgy
+							</span>
+							<span className='font-normal text-lg self-end'>
+								&nbsp; Make it count!
+							</span>
+						</Link>
+						<Link
+							to={pathname === '/login' ? '/signup' : '/login'}
+							className='bg-sky-900 text-white px-14 py-2 rounded-xl font-semibold ml-auto'
+						>
+							{pathname === '/login' ? 'Signup' : 'Login'}
+						</Link>
+					</>
 				)}
 			</nav>
 		</header>

@@ -13,12 +13,12 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import { useCategoriesContext } from '../hooks/useCategoryContext'
 
 import { scores } from '../utils/scores'
-import { expense, income } from '../utils/categories'
+import { categoryIcons } from '../utils/categories'
 
 const TransactionForm = () => {
 	const { dispatch } = useTransactionsContext()
 	const { user } = useAuthContext()
-	const { categories, setCategories } = useCategoriesContext()
+	const { categories } = useCategoriesContext()
 	const navigate = useNavigate()
 
 	const [transaction, setTransaction] = useState({
@@ -31,15 +31,6 @@ const TransactionForm = () => {
 	const [error, setError] = useState(null)
 	const [emptyFields, setEmptyFields] = useState([])
 	const [type, setType] = useState('expense')
-
-	useEffect(() => {
-		const getCategories = async () => {
-			const response = await fetch('/api/categories')
-			setCategories(response.categories)
-		}
-
-		getCategories()
-	}, [])
 
 	const handleSubmit = async e => {
 		e.preventDefault()
@@ -108,9 +99,11 @@ const TransactionForm = () => {
 				onChange={handleChange}
 			/>
 			<CategoryInput
-				categories={type === 'expense' ? expense : income}
+				categories={categories?.filter(
+					c => c.is_earning === +(type === 'income')
+				)}
 				onChange={c =>
-					setTransaction(prev => ({ ...prev, category: c.value }))
+					setTransaction(prev => ({ ...prev, category: c.id }))
 				}
 			/>
 
