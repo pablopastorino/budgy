@@ -25,5 +25,5 @@ SECRET=
 ```
 The client is ready to fetch to `http://localhost:400` host so I leave as the port number. If you want to change it, you must do it in the `.env` file and the `package.json` in the `client` (`proxy` property)
 
-3. Into the `server` folder run `npm install` or `yarn install` and `npm/yarn dev` to run the server.
+3. Into the `server` folder run `npm install` or `yarn install` and `npm/yarn start` to run the server.
 4. Into the `client` folder run `npm install` or `yarn install` and `npm/yarn start` to run the application.
