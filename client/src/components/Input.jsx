@@ -1,15 +1,11 @@
 import React from 'react'
 
 const Input = ({ name, onChange, error, value, type = 'text' }) => {
-	const label = () =>
-		name.includes('Name') ? name.split('Name')[0] + ' Name' : name
+	const label = () => (name.includes('Name') ? name.split('Name')[0] + ' Name' : name)
 
 	return (
-		<div className='flex flex-col w-3/4 sm:w-2/3 lg:w-1/2 mt-4'>
-			<label
-				className='text-xl font-medium ml-2 capitalize'
-				htmlFor='title'
-			>
+		<div className='flex flex-col w-3/4 sm:w-2/3 lg:w-2/3 mt-4'>
+			<label className='text-xl font-medium ml-2 capitalize' htmlFor='title'>
 				{label()}
 			</label>
 			<input

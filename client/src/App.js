@@ -24,29 +24,15 @@ function App() {
 						></Route>
 						<Route
 							path='/new'
-							element={
-								user ? (
-									<TransactionForm />
-								) : (
-									<Navigate to='/login' />
-								)
-							}
+							element={user ? <TransactionForm /> : <Navigate to='/login' />}
 						/>
 						<Route
 							path='/dashboard'
-							element={
-								user ? <Dashboard /> : <Navigate to='/login' />
-							}
+							element={user ? <Dashboard /> : <Navigate to='/login' />}
 						/>
 
-						<Route
-							path='/login'
-							element={!user ? <Login /> : <Navigate to='/' />}
-						/>
-						<Route
-							path='/signup'
-							element={!user ? <Signup /> : <Navigate to='/' />}
-						/>
+						<Route path='/login' element={!user ? <Login /> : <Navigate to='/' />} />
+						<Route path='/signup' element={!user ? <Signup /> : <Navigate to='/' />} />
 					</Routes>
 				</div>
 			</BrowserRouter>

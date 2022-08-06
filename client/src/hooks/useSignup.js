@@ -15,14 +15,10 @@ export const useSignup = () => {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ firstName, lastName, email, password })
 		})
-
 		const json = await response.json()
 
 		if (!response.ok) {
-			const existingEmail = 'Email already exists, login!'
-			setError(
-				json.error.startsWith('Duplicate') ? existingEmail : json.error
-			)
+			setError(json.error)
 			setIsLoading(false)
 		}
 

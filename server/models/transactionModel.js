@@ -6,9 +6,20 @@ const prisma = new PrismaClient()
 class Transaction {
 	static async getAll(id) {
 		const transactions = await prisma.Transaction.findMany({
-			where: { userId: id }
+			where: { userId: id },
+			include: {
+				concepts: {
+					select: {
+						name: true,
+						categories: {
+							select: {
+								name: true
+							}
+						}
+					}
+				}
+			}
 		})
-
 		return transactions
 	}
 
@@ -44,11 +55,11 @@ class Transaction {
 
 	static validateTransaction(transaction) {
 		const schema = Joi.object({
-			ammount: Joi.number().min(0).required(),
 			date: Joi.date().iso().max('now').required(),
-			score: Joi.number().min(1).max(5).required(),
 			categoryId: Joi.number().min(1).required(),
-			concept: Joi.string().min(1).max(25).required(),
+			concept: Joi.string().min(3).max(25).required(),
+			ammount: Joi.number().required(),
+			score: Joi.number().min(1).max(5).required(),
 			userId: Joi.number().min(1).required()
 		})
 		return schema.validate(transaction)

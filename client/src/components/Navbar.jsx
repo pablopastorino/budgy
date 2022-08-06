@@ -17,10 +17,7 @@ const Navbar = () => {
 			<nav className='flex items-center'>
 				{user ? (
 					<>
-						<Link
-							to='/'
-							className='font-extrabold text-4xl flex items-center'
-						>
+						<Link to='/' className='font-extrabold text-4xl flex items-center'>
 							<span className='hidden sm:inline-flex rounded-lg bg-orange-400 px-4 py-2'>
 								Budgy
 							</span>
@@ -71,7 +68,9 @@ const Navbar = () => {
 									/>
 								</svg>
 							)}
-							<span>{pathname === '/' ? 'Graphs' : 'List'}</span>
+							<span className='hidden sm:inline-block'>
+								{pathname === '/' ? 'Graphs' : 'List'}
+							</span>
 						</Link>
 						<span className='flex flex-col-reverse ml-auto sm:flex-row items-start'>
 							<Link
@@ -90,10 +89,7 @@ const Navbar = () => {
 					</>
 				) : (
 					<>
-						<Link
-							to='/'
-							className='font-extrabold text-4xl flex items-center'
-						>
+						<Link to='/' className='font-extrabold text-4xl flex items-center'>
 							<span className='sm:hidden inline-flex rounded-lg bg-orange-400 px-4 py-2'>
 								Bg
 							</span>

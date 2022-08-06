@@ -1,9 +1,7 @@
 const Transaction = require('../models/transactionModel')
 
 const getAll = async (req, res) => {
-	const {
-		id
-	} = req.user
+	const { id } = req.user
 	try {
 		const transactions = await Transaction.getAll(id)
 		res.status(200).json({
@@ -35,9 +33,7 @@ const create = async (req, res) => {
 		userId: req.user.id
 	}
 
-	const {
-		error
-	} = Transaction.validateTransaction(newTransaction)
+	const { error } = Transaction.validateTransaction(newTransaction)
 
 	try {
 		if (error) throw Error(error.details[0].message)
@@ -46,7 +42,6 @@ const create = async (req, res) => {
 		res.status(200).json({
 			transaction
 		})
-
 	} catch (error) {
 		res.status(400).json({
 			error: error.message

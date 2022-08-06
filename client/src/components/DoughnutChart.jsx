@@ -32,12 +32,12 @@ const DoughnutChart = ({ expenses }) => {
 	}
 
 	const labels = Array.from(
-		new Set(transactions?.filter(filterCategories).map(t => t.category))
+		new Set(transactions?.filter(filterCategories).map(t => t.concepts.categories.name))
 	)
 	const totals = []
 	labels?.forEach((l, i) => {
 		const total = transactions
-			.filter(t => t.category === l)
+			.filter(t => t.concepts.categories.name === l)
 			.reduce((a, b) => a + +b.ammount, 0)
 		totals[i] = Math.abs(total)
 	})
@@ -54,13 +54,8 @@ const DoughnutChart = ({ expenses }) => {
 			</div>
 			<div className='w-full'>
 				{labels.map((l, i) => (
-					<span
-						key={i}
-						className='flex w-full content-between px-8 mt-4'
-					>
-						<span className='text-2xl font-bold'>
-							{categoryIcons[l]}
-						</span>
+					<span key={i} className='flex w-full content-between px-8 mt-4'>
+						<span className='text-2xl font-bold'>{categoryIcons[l]}</span>
 						<span className='capitalize ml-4'>{l}</span>
 						<span className=' font-bold text-lg ml-auto'>
 							{formatter.format(totals[i])}
@@ -69,9 +64,7 @@ const DoughnutChart = ({ expenses }) => {
 				))}
 				<hr className='border-1 w-5/6 mx-auto bg-orange-600 border-orange-500' />
 				<span className='flex w-full content-between px-8 mt-4'>
-					<span className=''>
-						Total {expenses ? 'Expenses' : 'Incomes'}
-					</span>
+					<span className=''>Total {expenses ? 'Expenses' : 'Incomes'}</span>
 					<span className=' font-bold text-lg ml-auto'>
 						{formatter.format(totals.reduce((a, b) => a + b, 0))}
 					</span>

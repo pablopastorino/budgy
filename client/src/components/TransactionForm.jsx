@@ -21,10 +21,10 @@ const TransactionForm = () => {
 	const navigate = useNavigate()
 
 	const [transaction, setTransaction] = useState({
-		date: '',
+		date: new Date(),
 		concept: '',
 		ammount: '',
-		category: '',
+		categoryId: '',
 		score: ''
 	})
 	const [error, setError] = useState(null)
@@ -58,14 +58,15 @@ const TransactionForm = () => {
 			dispatch({
 				type: 'CREATE_TRANSACTION',
 				payload: {
-					...transaction
+					...transaction,
+					date: new Date(transaction.date).toISOString()
 				}
 			})
 			setTransaction({
 				date: '',
 				concept: '',
 				ammount: '',
-				category: '',
+				categoryId: '',
 				score: ''
 			})
 			setError(null)
@@ -75,9 +76,10 @@ const TransactionForm = () => {
 	}
 
 	const handleChange = e => {
+		let isDate = e.target.name === 'date'
 		setTransaction(prev => ({
 			...prev,
-			[e.target.name]: e.target.value
+			[e.target.name]: !isDate ? e.target.value : new Date(e.target.value).toISOString()
 		}))
 	}
 
@@ -88,36 +90,22 @@ const TransactionForm = () => {
 			}
 			onSubmit={handleSubmit}
 		>
-			<h3 className='font-extrabold text-4xl text-white'>
-				Add Transaction
-			</h3>
+			<h3 className='font-extrabold text-4xl text-white'>Add Transaction</h3>
 			<TypeInput checked={type} onChange={e => setType(e.target.value)} />
 			<Input
 				type='date'
 				name='date'
-				value={transaction.date}
+				value={new Date(transaction.date).getDate()}
 				onChange={handleChange}
 			/>
 			<CategoryInput
-				categories={categories?.filter(
-					c => c.is_earning === +(type === 'income')
-				)}
-				onChange={c =>
-					setTransaction(prev => ({ ...prev, category: c.id }))
-				}
+				categories={categories?.filter(c => c.isEarning === (type === 'income'))}
+				onChange={c => setTransaction(prev => ({ ...prev, categoryId: c.id }))}
 			/>
 
-			<Input
-				type='text'
-				name='concept'
-				value={transaction.concept}
-				onChange={handleChange}
-			/>
+			<Input type='text' name='concept' value={transaction.concept} onChange={handleChange} />
 			<div className='flex flex-col mt-4 w-3/4 sm:w-2/3 lg:w-1/2'>
-				<label
-					className='text-xl font-medium ml-2 capitalize'
-					htmlFor='title'
-				>
+				<label className='text-xl font-medium ml-2 capitalize' htmlFor='title'>
 					Ammount
 				</label>
 
@@ -125,24 +113,18 @@ const TransactionForm = () => {
 					className='appearance-none focus:outline-none h-10 rounded-3xl mt-1 px-6 text-md sm:text-lg text-sky-900'
 					thousandSeparator={true}
 					prefix={'$'}
-					onValueChange={vObj =>
+					onValueChange={vObj => {
+						const value = Math.abs(vObj.floatValue)
 						setTransaction({
 							...transaction,
-							ammount:
-								type === 'expense' ? -vObj.value : vObj.value
+							ammount: type === 'expense' ? -value : value
 						})
-					}
+					}}
 				/>
 			</div>
-			<ScoreInput
-				scores={scores}
-				onChange={handleChange}
-				selected={transaction.score}
-			/>
+			<ScoreInput scores={scores} onChange={handleChange} selected={transaction.score} />
 			{error && <div className='text-rose-500 font-medium'>{error}</div>}
-			<button className='bg-orange-300 px-14 py-2 rounded-xl font-semibold mt-6'>
-				Add
-			</button>
+			<button className='bg-orange-300 px-14 py-2 rounded-xl font-semibold mt-6'>Add</button>
 			<BackButton />
 		</form>
 	)

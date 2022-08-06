@@ -30,13 +30,7 @@ const TransactionDetails = ({ transaction }) => {
 		}
 	}
 
-	const {
-		ammount,
-		registraton_date: date,
-		score,
-		concept,
-		category
-	} = transaction
+	const { ammount, registrationDate, score, concepts } = transaction
 
 	const formatDate = date => date?.split('T')[0]
 
@@ -46,21 +40,21 @@ const TransactionDetails = ({ transaction }) => {
 				key='1'
 				className='shrink-0 bg-gray-900 text-white text-3xl h-12 w-12 rounded-2xl flex justify-center items-center text-center'
 			>
-				{categoryIcons[category]}
+				{categoryIcons[concepts?.categories?.name]}
 			</span>
 			<span key='2' className='flex flex-col flex-1 mx-6 w-1/2'>
 				<span
 					key='1'
 					className='text-lg font-semibold text-ellipsis whitespace-nowrap overflow-hidden'
 				>
-					{concept}
+					{concepts?.name}
 				</span>
 				<span key='2' className='flex'>
 					<span className='text-sm text-gray-600 mt-auto'>
-						{formatDate(date)}
+						{formatDate(registrationDate)}
 					</span>
 					<span className='ml-6 text-2xl'>
-						{scores.filter(s => s.id === score).icon}
+						{scores.filter(s => s.id === Number(score)).pop().icon}
 					</span>
 				</span>
 			</span>
@@ -79,11 +73,7 @@ const TransactionDetails = ({ transaction }) => {
 					stroke='currentColor'
 					strokeWidth={2}
 				>
-					<path
-						strokeLinecap='round'
-						strokeLinejoin='round'
-						d='M6 18L18 6M6 6l12 12'
-					/>
+					<path strokeLinecap='round' strokeLinejoin='round' d='M6 18L18 6M6 6l12 12' />
 				</svg>
 			</button>
 		</div>

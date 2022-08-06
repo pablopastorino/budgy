@@ -24,9 +24,7 @@ const Form = ({
 					onChange={onChange}
 				/>
 			))}
-			{error[0] && (
-				<div className='text-rose-500 font-medium'>{error}</div>
-			)}
+			{error[0] && <div className='text-rose-500 font-medium text-center'>{error}</div>}
 			<button
 				className='bg-orange-400 px-14 py-2 rounded-xl font-semibold my-4'
 				disabled={isLoading}
@@ -36,10 +34,7 @@ const Form = ({
 			{message.length && (
 				<span className='mb-4 mr-4'>
 					{message[0]} &nbsp;
-					<Link
-						className='font-semibold'
-						to={`/${message[1].toLowerCase()}`}
-					>
+					<Link className='font-semibold' to={`/${message[1].toLowerCase()}`}>
 						{message[1]}
 					</Link>
 				</span>
