@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          Int        @id @default(autoincrement())
+  name        String     @unique(map: "name") @db.VarChar(45)
+  isEarning   Boolean    @map("is_earning")
+  Concept   Concept[]
+
+  @@map("categories")
+}
+
+model Concept {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique(map: "name") @db.VarChar(45)
+  categoryId    Int             @map("categories_id")
+  categories    Category        @relation(fields: [categoryId], references: [id], onDelete: NoAction, map: "fk_concepts_categories1")
+  transactions  Transaction[]
+
+  @@index([categoryId], map: "fk_concepts_categories1_idx")
+  @@map("concepts")
+}
+
+model Transaction {
+  id               Int      @default(autoincrement())
+  ammount          Decimal  @db.Decimal(10, 0)
+  registrationDate DateTime @db.DateTime(0) @map("registraton_date")
+  score            String?  @db.VarChar(45)
+  userId           Int      @map("users_id")
+  conceptId        Int      @map("concepts_id")
+  concepts         Concept  @relation(fields: [conceptId], references: [id], onDelete: NoAction, map: "fk_transactions_concepts1")
+  User             User     @relation(fields: [userId], references: [id], onDelete: NoAction, map: "fk_transactions_users1")
+
+  @@id([id, userId, conceptId])
+  @@index([conceptId], map: "fk_transactions_concepts1_idx")
+  @@index([userId], map: "fk_transactions_users1_idx")
+
+  @@map("transactions")
+}
+
+model User {
+  id                Int            @id @default(autoincrement())
+  firstName         String         @db.VarChar(45) @map("first_name")
+  lastName          String         @db.VarChar(45)@map("last_name")
+  email             String         @unique(map: "email") @db.VarChar(255)
+  password          String         @db.VarChar(255) 
+  registrationDate  DateTime       @db.DateTime(0) @map("registration_date")
+  transactions      Transaction[]
+
+  @@map("users")
+}

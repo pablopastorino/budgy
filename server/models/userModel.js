@@ -1,72 +1,54 @@
-const mysql = require('mysql2/promise')
-const validator = require('validator')
+const { PrismaClient } = require('@prisma/client')
+const Joi = require('joi')
 const bcrypt = require('bcrypt')
-const { userQueries } = require('./database/queries')
 require('dotenv').config()
 
+const prisma = new PrismaClient()
+
 class User {
-	static async connect() {
-		const connection = await mysql.createConnection({
-			host: process.env.DB_HOST,
-			user: process.env.DB_USER,
-			password: process.env.DB_PASSWORD,
-			database: process.env.DB_NAME
-		})
-		return connection
-	}
-
-	static async get(email) {
-		if (!email) throw Error('Enter email')
-		if (!validator.isEmail(email)) throw Error('Enter a valid email')
-
-		const connection = await this.connect()
-		const query = userQueries.get(email)
-		const [row] = await connection.execute(query)
-
-		if (!row.length) throw Error('Invalid credentials!')
-
-		return row[0]
-	}
-
-	static async getById(id) {
-		if (!id) throw Error('Invalid id')
-
-		const connection = await this.connect()
-		const query = userQueries.getById(id)
-		const [row] = await connection.execute(query)
-
-		if (!row.length) throw Error('User does not exists')
-
-		return row[0]
-	}
-
-	static async create(firstName, lastName, email, password) {
-		if (!firstName || !lastName || !email || !password)
-			throw Error('All fields must be filled')
-		if (!validator.isEmail(email))
-			throw Error(`'${email}' is not a valid email`)
-		if (!validator.isStrongPassword(password))
-			throw Error('Weak password, try harder!')
-
+	static async signup(user) {
 		const salt = await bcrypt.genSalt(10)
-		const hash = await bcrypt.hash(password, salt)
+		const hash = await bcrypt.hash(user.password, salt)
 
-		const connection = await this.connect()
-		const query = userQueries.create(firstName, lastName, email, hash)
-		const [result] = await connection.execute(query)
-		return result.insertId
+		const newUser = await prisma.User.create({
+			data: {
+				...user,
+				password: hash,
+				registrationDate: new Date().toISOString()
+			}
+		})
+
+		return newUser
 	}
 
-	static async login(email, password) {
-		if (!email || !password) throw Error('All fields must be filled')
+	static async login(user) {
+		const isPresent = await prisma.User.findUnique({
+			where: { email: user.email }
+		})
+		if (!isPresent) throw Error('Invalid credentials!')
 
-		const user = await this.get(email)
-		if (!user) throw Error('Invalid credentials!')
-
-		const match = await bcrypt.compare(password, user.password)
+		const match = await bcrypt.compare(user.password, isPresent.password)
 		if (!match) throw Error('Invalid credentials!')
 
-		return user
+		return isPresent
+	}
+
+	static validateSignup(user) {
+		const schema = Joi.object({
+			firstName: Joi.string().min(2).required(),
+			lastName: Joi.string().min(2).required(),
+			email: Joi.string().email().required(),
+			password: Joi.string().min(5).required()
+		})
+		return schema.validate(user)
+	}
+
+	static validateLogin(user) {
+		const schema = Joi.object({
+			email: Joi.string().email().required(),
+			password: Joi.string().min(5).required()
+		})
+		return schema.validate(user)
 	}
 }
 

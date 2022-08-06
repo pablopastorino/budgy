@@ -1,65 +1,57 @@
-const mysql = require('mysql2/promise')
-const validator = require('validator')
-const { transactionQueries } = require('./database/queries')
-require('dotenv').config()
-const User = require('./userModel')
+const { PrismaClient } = require('@prisma/client')
+const Joi = require('joi')
+
+const prisma = new PrismaClient()
 
 class Transaction {
-	static async connect() {
-		const connection = await mysql.createConnection({
-			host: process.env.DB_HOST,
-			user: process.env.DB_USER,
-			password: process.env.DB_PASSWORD,
-			database: process.env.DB_NAME
-		})
-		return connection
-	}
-
 	static async getAll(id) {
-		if (!id) throw Error('Invalid user')
+		const transactions = await prisma.Transaction.findMany({
+			where: { userId: id }
+		})
 
-		const connection = await this.connect()
-		const query = transactionQueries.getAll(id)
-		const [rows] = await connection.execute(query)
-
-		if (!rows.length) throw Error('There are no transactions yet')
-
-		return rows
-	}
-
-	static async get(id) {
-		if (!id) throw Error('Invalid id')
-
-		const connection = await this.connect()
-		const query = transactionQueries.get(id)
-		const [rows] = await connection.execute(query)
-
-		return rows
+		return transactions
 	}
 
 	static async remove(id) {
-		if (!id) throw Error('Invalid id')
+		const deleteTransaction = await prisma.Transaction.deleteMany({
+			where: { id: Number(id) }
+		})
 
-		const connection = await this.connect()
-		const query = transactionQueries.delete(id)
-		const rows = await connection.execute(query)
+		return deleteTransaction
 	}
 
-	static async create(ammount, date, score, userId, conceptId) {
-		if (!ammount || !date || !score || !conceptId)
-			throw Error('Complete all fields to create a transaction')
+	static async create(transaction) {
+		const { concept: name, categoryId } = transaction
 
-		const connection = await this.connect()
-		const query = transactionQueries.create(
-			ammount,
-			date,
-			score,
-			userId,
-			conceptId
-		)
-		const [result] = await connection.execute(query)
+		const newConcept = await prisma.Concept.upsert({
+			where: { name },
+			update: { name, categoryId },
+			create: { name, categoryId }
+		})
 
-		return result.insertId
+		const newTransaction = await prisma.transaction.create({
+			data: {
+				ammount: transaction.ammount,
+				registrationDate: transaction.date,
+				score: String(transaction.score),
+				userId: transaction.userId,
+				conceptId: newConcept.id
+			}
+		})
+
+		return newTransaction
+	}
+
+	static validateTransaction(transaction) {
+		const schema = Joi.object({
+			ammount: Joi.number().min(0).required(),
+			date: Joi.date().iso().max('now').required(),
+			score: Joi.number().min(1).max(5).required(),
+			categoryId: Joi.number().min(1).required(),
+			concept: Joi.string().min(1).max(25).required(),
+			userId: Joi.number().min(1).required()
+		})
+		return schema.validate(transaction)
 	}
 }
 
