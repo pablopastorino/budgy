@@ -35,18 +35,18 @@ class User {
 
 	static validateSignup(user) {
 		const schema = Joi.object({
-			firstName: Joi.string().min(2).required(),
-			lastName: Joi.string().min(2).required(),
-			email: Joi.string().email().required(),
-			password: Joi.string().min(5).required()
+			firstName: Joi.string().min(2).required().label('First Name'),
+			lastName: Joi.string().min(2).required().label('Last Name'),
+			email: Joi.string().email().required().label('Email'),
+			password: Joi.string().min(5).required().label('Password')
 		})
 		return schema.validate(user)
 	}
 
 	static validateLogin(user) {
 		const schema = Joi.object({
-			email: Joi.string().email().required(),
-			password: Joi.string().min(5).required()
+			email: Joi.string().email().required().label('Email'),
+			password: Joi.string().min(5).required().label('Password')
 		})
 		return schema.validate(user)
 	}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import Form from '../components/Form'
+import Form from '../components/common/Form'
 
 import { useLogin } from '../hooks/useLogin'
 
@@ -20,7 +20,7 @@ const Login = () => {
 
 	return (
 		<div className='h-full w-full flex items-center justify-center flex-col'>
-			<h1 className='text-3xl flex-1 flex flex-col sm:flex-row items-center justify-center'>
+			<h1 className='gap-2 text-3xl flex-1 flex flex-col sm:flex-row items-center justify-center'>
 				<span>It's your money:</span>
 				<span className='bg-orange-400 rounded-lg px-1 text-white'>Make it count!</span>
 			</h1>

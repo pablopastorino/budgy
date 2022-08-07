@@ -1,6 +1,6 @@
 import React from 'react'
 import Select from 'react-select'
-import { categoryIcons } from '../utils/categories'
+import { categoryIcons } from '../../utils/categories'
 
 const CategoryInput = ({ categories, onChange, value }) => {
 	const cunstomStyles = {

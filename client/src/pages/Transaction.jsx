@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import NumberFormat from 'react-number-format'
 
-import Input from '../components/Input'
-import CategoryInput from './CategoryInput'
-import ScoreInput from './ScoreInput'
-import TypeInput from './TypeInput'
-import BackButton from './BackButton'
+import Input from '../components/common/Input'
+import CategoryInput from '../components/transaction-form/CategoryInput'
+import ScoreInput from '../components/transaction-form/ScoreInput'
+import TypeInput from '../components/transaction-form/TypeInput'
+import FloatingButton from '../components/common/FloatingButton'
+import { BackIcon } from '../assets/BackIcon'
 
 import { useTransactionsContext } from '../hooks/useTransactionsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -90,7 +91,9 @@ const TransactionForm = () => {
 			}
 			onSubmit={handleSubmit}
 		>
-			<h3 className='font-extrabold text-4xl my-4 wrap text-center'>Add Transaction</h3>
+			<h3 className='font-extrabold sm:text-4xl text-3xl my-4 wrap text-center'>
+				Add Transaction
+			</h3>
 			<TypeInput checked={type} onChange={e => setType(e.target.value)} />
 			<Input
 				type='date'
@@ -123,9 +126,15 @@ const TransactionForm = () => {
 				/>
 			</div>
 			<ScoreInput scores={scores} onChange={handleChange} selected={transaction.score} />
-			{error && <div className='text-rose-500 font-medium mt-4'>{error}</div>}
+			{error && (
+				<div className='text-white bg-gray-900 px-2 rounded-md font-medium mt-4'>
+					{error}
+				</div>
+			)}
 			<button className='bg-orange-300 px-14 py-2 rounded-xl font-semibold mt-6'>Add</button>
-			<BackButton />
+			<FloatingButton to='/'>
+				<BackIcon />
+			</FloatingButton>
 		</form>
 	)
 }

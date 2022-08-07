@@ -5,7 +5,7 @@ const Input = ({ name, onChange, error, value, type = 'text' }) => {
 
 	return (
 		<div className={`flex flex-col mt-4 w-3/4 sm:w-2/3`}>
-			<label className='text-xl font-medium ml-2 capitalize' htmlFor='title'>
+			<label className='text-xl font-medium ml-2 capitalize' htmlFor={name}>
 				{label()}
 			</label>
 			<input
@@ -14,7 +14,7 @@ const Input = ({ name, onChange, error, value, type = 'text' }) => {
 				name={name}
 				value={value}
 				onChange={onChange}
-				className='appearance-none focus:outline-none h-10 rounded-3xl mt-1 px-6 text-md sm:text-lg text-sky-900'
+				className='appearance-none focus:outline-none h-10 rounded-3xl mt-1 px-6 text-md sm:text-lg text-gray-900'
 				// className={error && !value ? 'error' : ''}
 				autoComplete='off'
 			/>

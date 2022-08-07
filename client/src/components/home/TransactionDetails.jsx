@@ -1,18 +1,16 @@
 import React from 'react'
-import { useAuthContext } from '../hooks/useAuthContext'
-import { useTransactionsContext } from '../hooks/useTransactionsContext'
-import { categoryIcons } from '../utils/categories'
-import { scores } from '../utils/scores'
+
+import { useAuthContext } from '../../hooks/useAuthContext'
+import { useTransactionsContext } from '../../hooks/useTransactionsContext'
+
+import { categoryIcons } from '../../utils/categories'
+import { CrossIcon } from '../../assets/CrossIcon'
+import { formatter } from '../../utils/helpers'
+import { scores } from '../../utils/scores'
 
 const TransactionDetails = ({ transaction }) => {
 	const { dispatch } = useTransactionsContext()
 	const { user } = useAuthContext()
-
-	const formatter = new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-		minimumFractionDigits: 0
-	})
 
 	const handleClick = async () => {
 		if (!user) return
@@ -23,9 +21,6 @@ const TransactionDetails = ({ transaction }) => {
 				Authorization: `Bearer ${user.token}`
 			}
 		})
-		const json = await response.json()
-
-		console.log(json)
 
 		if (response.ok) {
 			dispatch({ type: 'DELETE_TRANSACTION', payload: { id: transaction.id } })
@@ -67,16 +62,7 @@ const TransactionDetails = ({ transaction }) => {
 				onClick={handleClick}
 				className='absolute -right-1 -top-2 bg-rose-500 text-white font-bold rounded-full w-6 h-6 flex items-center justify-center'
 			>
-				<svg
-					xmlns='http://www.w3.org/2000/svg'
-					className='h-6 w-6'
-					fill='none'
-					viewBox='0 0 24 24'
-					stroke='currentColor'
-					strokeWidth={2}
-				>
-					<path strokeLinecap='round' strokeLinejoin='round' d='M6 18L18 6M6 6l12 12' />
-				</svg>
+				<CrossIcon />
 			</button>
 		</div>
 	)

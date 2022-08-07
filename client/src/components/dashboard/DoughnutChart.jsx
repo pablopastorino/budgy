@@ -1,10 +1,11 @@
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import 'chart.js/auto'
-import { useTransactionsContext } from '../hooks/useTransactionsContext'
 
-import { chartColors } from '../utils/chartColors'
-import { categoryIcons } from '../utils/categories'
+import { useTransactionsContext } from '../../hooks/useTransactionsContext'
+
+import { chartColors } from '../../utils/chartColors'
+import { categoryIcons } from '../../utils/categories'
 
 const DoughnutChart = ({ expenses }) => {
 	const { transactions } = useTransactionsContext()

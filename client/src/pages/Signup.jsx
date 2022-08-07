@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSignup } from '../hooks/useSignup'
-import Form from '../components/Form'
+import Form from '../components/common/Form'
 
 const Signup = () => {
 	const [data, setData] = useState({
@@ -22,7 +22,7 @@ const Signup = () => {
 
 	return (
 		<div className='flex items-center flex-col md:flex-row-reverse'>
-			<h1 className='my-4 text-3xl text-center '>
+			<h1 className='flex md:block flex-wrap items-center justify-center my-4 gap-2 text-3xl text-center '>
 				<span className='inline-block'>It's your money:</span>
 				<span className=' inline-block bg-orange-400 rounded-lg px-1 text-white'>
 					Make it count!

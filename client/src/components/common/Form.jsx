@@ -24,7 +24,11 @@ const Form = ({
 					onChange={onChange}
 				/>
 			))}
-			{error[0] && <div className='text-rose-500 font-medium text-center'>{error}</div>}
+			{error[0] && (
+				<div className='text-white bg-gray-900 px-2 rounded-md font-medium text-center mt-2'>
+					{error}
+				</div>
+			)}
 			<button
 				className='bg-orange-400 px-14 py-2 rounded-xl font-semibold my-4'
 				disabled={isLoading}

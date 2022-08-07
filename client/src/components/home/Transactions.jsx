@@ -1,6 +1,6 @@
 import React from 'react'
 import TransactionDetails from './TransactionDetails'
-import { useTransactionsContext } from '../hooks/useTransactionsContext'
+import { useTransactionsContext } from '../../hooks/useTransactionsContext'
 
 const Transactions = () => {
 	const { transactions } = useTransactionsContext()

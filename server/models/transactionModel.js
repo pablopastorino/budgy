@@ -55,12 +55,12 @@ class Transaction {
 
 	static validateTransaction(transaction) {
 		const schema = Joi.object({
-			date: Joi.date().iso().max('now').required(),
-			categoryId: Joi.number().min(1).required(),
-			concept: Joi.string().min(3).max(25).required(),
-			ammount: Joi.number().required(),
-			score: Joi.number().min(1).max(5).required(),
-			userId: Joi.number().min(1).required()
+			date: Joi.date().iso().max('now').required().label('Date'),
+			categoryId: Joi.number().min(1).required().label('Category'),
+			concept: Joi.string().min(3).max(25).required().label('Concept'),
+			ammount: Joi.number().required().label('Ammount'),
+			score: Joi.number().min(1).max(5).required().label('Score'),
+			userId: Joi.number().min(1).required().label('User')
 		})
 		return schema.validate(transaction)
 	}

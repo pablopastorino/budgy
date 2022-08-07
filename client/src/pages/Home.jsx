@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
-import Transactions from '../components/Transactions'
-import Balance from '../components/Balance'
-import NewTransaction from '../components/NewTransaction'
+import Transactions from '../components/home/Transactions'
+import Balance from '../components/home/Balance'
+import FloatingButton from '../components/common/FloatingButton'
+import { PlusIcon } from '../assets/PlusIcon'
 
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useCategoriesContext } from '../hooks/useCategoryContext'
 import { useTransactionsContext } from '../hooks/useTransactionsContext'
 
 const Home = () => {
-	const { transactions, dispatch } = useTransactionsContext()
-	const { setCategories } = useCategoriesContext()
 	const { user } = useAuthContext()
+	const { setCategories } = useCategoriesContext()
+	const { dispatch } = useTransactionsContext()
 
 	useEffect(() => {
 		const getCategories = async () => {
@@ -35,11 +36,14 @@ const Home = () => {
 
 		if (user) fetchTransactions()
 	}, [dispatch, user])
+
 	return (
-		<div className='h-full w-full flex flex-col md:flex-row md:px-16'>
-			<Balance data={transactions} />
+		<div className='h-full flex flex-col md:flex-row md:px-16'>
+			<Balance />
 			<Transactions />
-			<NewTransaction />
+			<FloatingButton to='/new'>
+				<PlusIcon />
+			</FloatingButton>
 		</div>
 	)
 }

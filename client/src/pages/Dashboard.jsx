@@ -1,5 +1,5 @@
 import React from 'react'
-import DoughnutChart from '../components/DoughnutChart'
+import DoughnutChart from '../components/dashboard/DoughnutChart'
 
 const Dashboard = () => {
 	return (
