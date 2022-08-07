@@ -5,7 +5,7 @@ const BackButton = () => {
 	return (
 		<Link
 			to={'/'}
-			className='absolute left-4 bottom-4 bg-gray-900 text-white w-20 h-20 flex items-center justify-center rounded-full font-extrabold'
+			className='shadow-3xl absolute left-4 bottom-4 bg-gray-900 text-white w-20 h-20 flex items-center justify-center rounded-full font-extrabold'
 		>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'

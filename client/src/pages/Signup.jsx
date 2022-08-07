@@ -35,7 +35,7 @@ const Signup = () => {
 				onChange={handleChange}
 				onSubmit={handleSubmit}
 				title='Signup'
-				className='m-auto bg-sky-300 rounded-3xl w-5/6 sm:w-3/4 lg:w-3/4 flex flex-col justify-around items-center py-5 sm:py-2 sm:my-4'
+				className='m-auto bg-gradient-to-tr from-blue-200 to-blue-300  rounded-3xl w-5/6 sm:w-3/4 lg:w-3/4 flex flex-col justify-around items-center py-5 sm:py-2 sm:my-4'
 				message={['Have an account?', 'Login']}
 			/>
 		</div>

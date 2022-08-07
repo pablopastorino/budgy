@@ -3,8 +3,21 @@ import Select from 'react-select'
 import { categoryIcons } from '../utils/categories'
 
 const CategoryInput = ({ categories, onChange, value }) => {
+	const cunstomStyles = {
+		control: (provided, state) => {
+			return {
+				...provided,
+				border: state.isFocused ? 0 : 0,
+				boxShadow: state.isFocused ? 0 : 0,
+				'&:hover': {
+					border: state.isFocused ? 0 : 0
+				}
+			}
+		}
+	}
+
 	return (
-		<div className='flex flex-col w-3/4 sm:w-2/3 lg:w-1/2 mt-4'>
+		<div className='flex flex-col w-3/4 sm:w-2/3 mt-4'>
 			<label htmlFor='categories' className='text-xl font-medium ml-2 capitalize'>
 				Category
 			</label>
@@ -15,6 +28,7 @@ const CategoryInput = ({ categories, onChange, value }) => {
 					value={value}
 					options={categories}
 					onChange={onChange}
+					styles={cunstomStyles}
 					getOptionLabel={e => (
 						<div
 							style={{ display: 'flex', alignItems: 'center' }}

@@ -13,15 +13,15 @@ const Navbar = () => {
 	}
 
 	return (
-		<header className='block py-6 px-4'>
+		<header className='text-white block py-6 px-4 bg-gradient-to-l from-violet-500 to-indigo-500 hover:bg-gradient-to-r transition-all'>
 			<nav className='flex items-center'>
 				{user ? (
 					<>
 						<Link to='/' className='font-extrabold text-4xl flex items-center'>
-							<span className='hidden sm:inline-flex rounded-lg bg-orange-400 px-4 py-2'>
+							<span className='hidden sm:inline-flex rounded-lg bg-orange-400 text-gray-900 px-4 py-2'>
 								Budgy
 							</span>
-							<span className='sm:hidden inline-flex rounded-lg bg-orange-400 px-4 py-2'>
+							<span className='sm:hidden inline-flex rounded-lg bg-orange-400 text-gray-900 px-4 py-2'>
 								Bg
 							</span>
 							<span className='hidden md:font-normal md:text-lg md:self-end'>
@@ -72,7 +72,30 @@ const Navbar = () => {
 								{pathname === '/' ? 'Graphs' : 'List'}
 							</span>
 						</Link>
-						<span className='flex flex-col-reverse ml-auto sm:flex-row items-start'>
+						<Link
+							to={'/new'}
+							className='h-full text-3xl transition-all ml-2 flex items-end'
+						>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								className='h-12 w-12 transition-all'
+								fill='none'
+								viewBox='0 0 24 24'
+								stroke='currentColor'
+								strokeWidth={2}
+							>
+								<path
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'
+								/>
+							</svg>
+							<span className='hidden sm:inline-block'>
+								New
+								{/* {pathname === '/' ? 'Graphs' : 'List'} */}
+							</span>
+						</Link>
+						<span className='flex flex-col-reverse ml-auto sm:flex-row items-baseline'>
 							<Link
 								to='/dashboard'
 								className='ml-auto font-semibold text-lg sm:text-2xl sm:mt-auto'
@@ -81,7 +104,7 @@ const Navbar = () => {
 							</Link>
 							<button
 								onClick={handleClick}
-								className='px-2 py-1 bg-sky-300 text-white sm:px-14 sm:py-2 rounded-xl font-semibold ml-4'
+								className='px-3 py-1 bg-gray-900 text-white sm:px-8 sm:py-1 rounded-3xl text-lg font-semibold ml-4'
 							>
 								Log Out
 							</button>
@@ -90,10 +113,10 @@ const Navbar = () => {
 				) : (
 					<>
 						<Link to='/' className='font-extrabold text-4xl flex items-center'>
-							<span className='sm:hidden inline-flex rounded-lg bg-orange-400 px-4 py-2'>
+							<span className='sm:hidden inline-flex rounded-lg bg-orange-400 text-gray-900 px-4 py-2'>
 								Bg
 							</span>
-							<span className='hidden sm:inline-flex rounded-lg bg-orange-400 px-4 py-2'>
+							<span className='hidden sm:inline-flex rounded-lg bg-orange-400 text-gray-900 px-4 py-2'>
 								Budgy
 							</span>
 							<span className='hidden sm:inline-block sm:font-normal sm:text-lg sm:self-end'>
@@ -102,7 +125,7 @@ const Navbar = () => {
 						</Link>
 						<Link
 							to={pathname === '/login' ? '/signup' : '/login'}
-							className='bg-sky-900 text-white px-14 py-2 rounded-xl font-semibold ml-auto'
+							className='bg-gray-900 text-white px-14 py-2 rounded-xl font-semibold ml-auto'
 						>
 							{pathname === '/login' ? 'Signup' : 'Login'}
 						</Link>

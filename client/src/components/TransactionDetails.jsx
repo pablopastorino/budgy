@@ -25,8 +25,10 @@ const TransactionDetails = ({ transaction }) => {
 		})
 		const json = await response.json()
 
-		if (response.ok === true) {
-			dispatch({ type: 'DELETE_TRANSACTION', payload: json.transaction })
+		console.log(json)
+
+		if (response.ok) {
+			dispatch({ type: 'DELETE_TRANSACTION', payload: { id: transaction.id } })
 		}
 	}
 

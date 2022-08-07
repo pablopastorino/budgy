@@ -2,45 +2,50 @@ import React from 'react'
 
 const TypeInput = ({ checked, onChange }) => {
 	return (
-		<div className='flex flex-col flex-wrap w-3/4 sm:w-2/3 lg:w-1/2 mt-2'>
-			<label
-				className='text-xl font-medium ml-2 capitalize'
-				htmlFor='title'
-			>
+		<div className='flex flex-col flex-wrap mt-2 w-3/4 sm:w-2/3'>
+			<label className='text-xl font-medium ml-2 capitalize' htmlFor='title'>
 				Type
 			</label>
-			<div className='flex justify-center'>
-				<div className='flex items-center mr-4'>
-					<input
-						id='income'
-						type='radio'
-						value='income'
-						name='type'
-						className='w-6 h-6'
-						onChange={onChange}
-						checked={checked === 'income'}
-					/>
+			<div className='flex'>
+				<div className='flex items-center mt-1 flex-grow'>
 					<label
 						htmlFor='income'
-						className='ml-2 text-lg font-medium ml-2 capitalize text-lime-700'
+						className={`h-10 flex items-center justify-center w-full text-lg font-medium capitalize px-2 py-1 rounded-l-3xl ${
+							checked === 'income'
+								? 'bg-gray-900 text-white'
+								: 'text-gray-900 bg-white'
+						}`}
 					>
+						<input
+							id='income'
+							type='checkbox'
+							value='income'
+							name='type'
+							className='hidden'
+							onChange={onChange}
+							checked={checked === 'income'}
+						/>
 						Income
 					</label>
 				</div>
-				<div className='flex items-center mr-4'>
-					<input
-						checked={checked === 'expense'}
-						id='expense'
-						type='radio'
-						value='expense'
-						name='type'
-						className='w-6 h-6'
-						onChange={onChange}
-					/>
+				<div className='flex items-center mt-1 flex-grow'>
 					<label
 						htmlFor='expense'
-						className='ml-2 text-lg font-medium ml-2 capitalize text-red-700'
+						className={`h-10 flex items-center justify-center w-full text-lg font-medium capitalize px-2 py-1 rounded-r-3xl ${
+							checked === 'expense'
+								? 'bg-gray-900 text-white'
+								: 'text-gray-900 bg-white'
+						}`}
 					>
+						<input
+							checked={checked === 'expense'}
+							id='expense'
+							type='checkbox'
+							value='expense'
+							name='type'
+							className='hidden'
+							onChange={onChange}
+						/>
 						Expense
 					</label>
 				</div>

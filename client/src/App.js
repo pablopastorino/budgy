@@ -13,7 +13,7 @@ function App() {
 	const { user } = useAuthContext()
 
 	return (
-		<div className='App text-sky-900 flex flex-col h-full'>
+		<div className='App text-gray-900 flex flex-col h-full transition'>
 			<BrowserRouter>
 				<Navbar />
 				<div className='h-full flex flex-col items-center overflow-y-scroll mb-8'>
