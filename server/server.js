@@ -11,3 +11,5 @@ app.use('/api/categories', categoriesRoutes)
 app.listen(process.env.PORT, () =>
 	console.log(`Listening for requests in port ${process.env.PORT}`)
 )
+
+module.exports = app
