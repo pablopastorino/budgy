@@ -19,7 +19,7 @@ const Login = () => {
 	}
 
 	return (
-		<div className='h-full w-full flex items-center justify-center flex-col'>
+		<div className='w-full flex flex-col items-center'>
 			<h1 className='gap-2 text-3xl flex-1 flex flex-col sm:flex-row items-center justify-center'>
 				<span>It's your money:</span>
 				<span className='bg-orange-400 rounded-lg px-1 text-white'>Make it count!</span>
@@ -28,7 +28,7 @@ const Login = () => {
 				data={data}
 				error={[error, []]}
 				isLoading={isLoading}
-				className='m-auto bg-gradient-to-tr from-blue-200 to-blue-300 rounded-3xl h-3/4 w-5/6 sm:w-3/4 lg:w-2/4 flex flex-col justify-around items-center py-10 sm:py-2'
+				className='bg-gradient-to-tr from-blue-200 to-blue-300 rounded-3xl h-3/4 w-5/6 sm:w-3/4 md:w-7/12 lg:w-5/12 flex flex-col justify-around items-center py-10 sm:py-2'
 				onChange={handleChange}
 				onSubmit={handleSubmit}
 				title='Login'

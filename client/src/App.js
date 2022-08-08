@@ -16,7 +16,7 @@ function App() {
 		<div className='App text-gray-900 flex flex-col h-full transition-all'>
 			<BrowserRouter>
 				<Navbar />
-				<div className='h-full flex flex-col items-center overflow-y-scroll mb-8'>
+				<div className='h-full flex overflow-y-scroll sm:py-8 py-3'>
 					<Routes>
 						<Route
 							path='/'

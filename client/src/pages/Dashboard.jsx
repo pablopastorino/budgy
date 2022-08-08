@@ -3,7 +3,7 @@ import DoughnutChart from '../components/dashboard/DoughnutChart'
 
 const Dashboard = () => {
 	return (
-		<div className='flex items-start justify-center flex-wrap h-full'>
+		<div className='flex justify-around w-full flex-wrap sm:flex-nowrap'>
 			<div>
 				<DoughnutChart key='expenses' expenses={true} />
 			</div>

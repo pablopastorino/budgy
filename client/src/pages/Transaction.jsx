@@ -77,6 +77,7 @@ const TransactionForm = () => {
 	}
 
 	const handleChange = e => {
+		if (!e.target.value) return
 		let isDate = e.target.name === 'date'
 		setTransaction(prev => ({
 			...prev,
@@ -87,7 +88,7 @@ const TransactionForm = () => {
 	return (
 		<form
 			className={
-				'shadow-lg bg-gradient-to-br from-blue-100 to-blue-300 rounded-3xl w-5/6 sm:w-3/4 lg:w-2/4 flex flex-col justify-around items-center py-5 my-6'
+				'shadow-lg bg-gradient-to-br from-blue-100 to-blue-300 rounded-3xl w-5/6 sm:w-3/4 lg:w-2/4 flex flex-col justify-around items-center py-5 m-auto'
 			}
 			onSubmit={handleSubmit}
 		>

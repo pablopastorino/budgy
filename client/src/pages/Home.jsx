@@ -38,7 +38,7 @@ const Home = () => {
 	}, [dispatch, user])
 
 	return (
-		<div className='h-full flex flex-col md:flex-row md:px-16'>
+		<div className='flex flex-col sm:flex-row w-full justify-evenly'>
 			<Balance />
 			<Transactions />
 			<FloatingButton to='/new'>

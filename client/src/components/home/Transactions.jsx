@@ -6,7 +6,7 @@ const Transactions = () => {
 	const { transactions } = useTransactionsContext()
 
 	return (
-		<div className='flex-grow px-4 pt-2 mb-4 w-full flex flex-col overflow-y-auto overflow-x-hidden'>
+		<div className='px-4 flex flex-col overflow-y-auto overflow-x-hidden flex-1'>
 			{transactions &&
 				transactions.map((t, i) => <TransactionDetails key={i} transaction={t} />)}
 		</div>

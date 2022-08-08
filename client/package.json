@@ -26,15 +26,9 @@
 		"cypress:open": "cypress open"
 	},
 	"eslintConfig": {
-		"env": {
-			"cypress/global": true
-		},
 		"extends": [
 			"react-app",
 			"react-app/jest"
-		],
-		"plugins": [
-			"cypress"
 		]
 	},
 	"browserslist": {
