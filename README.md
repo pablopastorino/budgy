@@ -29,7 +29,7 @@ SECRET=alkemy
 
 ```
 
-The client is ready to fetch to `http://localhost:400` host so I would recomend leaving it as the port number. If you want to change it, you must do it inside the `package.json` file in the `client` (`proxy` property) also. Feel free to change the default `SECRET`value.
+The client is ready to fetch to `http://localhost:4000` host so I would recomend leaving it as the port number. If you want to change it, you must do it inside the `package.json` file in the `client` (`proxy` property) also. Feel free to change the default `SECRET`value.
 
 4. Into the `server` folder run `npm install` or `yarn install` and `npm/yarn start` to run the server.
 
