@@ -2,6 +2,8 @@
 
 Personal budget app, to register incomes expenses and keep track of the balance.
 
+![www_screencapture_com_2022-10-12_16_16](https://user-images.githubusercontent.com/69921834/195429352-0176f424-abaf-493f-8aef-5f893e228cae.gif)
+
 ## Description
 
 The Budgy application helps to keep track of your incomes, expenses and balance. Making it easy to create and update transactions and friendly to visualize the categories sources and destinations of your money with a graphic dashboard. All this for every registrated and autenticated user.
