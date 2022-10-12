@@ -67,11 +67,12 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `budgy_db`.`transactions` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `ammount` DECIMAL(10,0) NOT NULL,
-  `registraton_date` DATETIME NOT NULL,
+  `transaction_date` DATE NOT NULL,
+  `registration_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `score` VARCHAR(45) NULL DEFAULT NULL,
   `users_id` INT(11) NOT NULL,
   `concepts_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`, `users_id`, `concepts_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_transactions_users1_idx` (`users_id` ASC),
   INDEX `fk_transactions_concepts1_idx` (`concepts_id` ASC),
   CONSTRAINT `fk_transactions_concepts1`
@@ -82,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `budgy_db`.`transactions` (
   CONSTRAINT `fk_transactions_users1`
     FOREIGN KEY (`users_id`)
     REFERENCES `budgy_db`.`users` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

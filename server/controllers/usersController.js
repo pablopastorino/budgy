@@ -7,6 +7,15 @@ const createToken = id => {
 	})
 }
 
+const getUsers = async (req, res) => {
+	try {
+		const users = await User.get()
+		res.status(200).json(users)
+	} catch (error) {
+		res.status(400).json({ error })
+	}
+}
+
 const loginUser = async (req, res) => {
 	const { error } = User.validateLogin(req.body)
 
@@ -57,6 +66,7 @@ const signupUser = async (req, res) => {
 }
 
 module.exports = {
+	getUsers,
 	loginUser,
 	signupUser
 }

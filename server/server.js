@@ -8,8 +8,8 @@ app.use('/api/user', userRoutes)
 app.use('/api/transactions', trantactionRoutes)
 app.use('/api/categories', categoriesRoutes)
 
-app.listen(process.env.PORT, () =>
+const server = app.listen(process.env.PORT, () =>
 	console.log(`Listening for requests in port ${process.env.PORT}`)
 )
 
-module.exports = app
+module.exports = { app, server }

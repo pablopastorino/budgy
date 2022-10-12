@@ -6,6 +6,14 @@ require('dotenv').config()
 const prisma = new PrismaClient()
 
 class User {
+	static async get() {
+		return await prisma.User.findMany({})
+	}
+
+	static async delete() {
+		await prisma.User.deleteMany({})
+	}
+
 	static async signup(user) {
 		const salt = await bcrypt.genSalt(10)
 		const hash = await bcrypt.hash(user.password, salt)
